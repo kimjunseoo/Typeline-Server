@@ -58,17 +58,12 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 변경', description: '' })
     @ApiParam({
-        name: "month",
+        name: "yyyymmdd",
         required: true,
-        description: "조회할 월"
+        description: "연도와 월, 일을 붙인 포맷 / ex: 20230609"
     })
-    @ApiQuery({
-        name: "day",
-        required: true,
-        description: "조회할 일"
-    })
-    @Patch('/:month?day')
-    updateSchedule(){
+    @Patch('/:yyyymmdd')
+    updateSchedule(@Param('yyyymmdd', ParseIntPipe) yyyymmdd: number){
 
     }
 
