@@ -1,6 +1,7 @@
-import { createUserInfo } from './dto/create-userInfo.dto';
+import { userInfo } from 'os';
 import { UserService } from './user.service';
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { User } from '@prisma/client';
 
 @Controller('user')
 export class UserController {
@@ -9,8 +10,8 @@ export class UserController {
     }
 
     @Post()
-    registerUserInfo(@Body() userInfo: createUserInfo){
-        return `${userInfo}`;
+    registerUserInfo(@Body() userInfo: User){
+        return this.userService.registerUserInfo(userInfo);
     }
 
 }
