@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Schedule" ALTER COLUMN "yyyymm" DROP NOT NULL,
+ALTER COLUMN "yyyymmdd" DROP NOT NULL;
