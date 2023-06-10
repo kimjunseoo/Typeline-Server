@@ -5,9 +5,21 @@ export class createScheduleDTO {
 
     @ApiProperty()
     @IsNotEmpty()
-    userId : string
+    yyyy: string
 
     @ApiProperty()
     @IsNotEmpty()
-    memo : string
+    mm: string
+    
+    @ApiProperty()
+    @IsNotEmpty()
+    dd: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    userId: string
+
+    @ApiProperty()
+    @IsNotEmpty()
+    memo: string
 }

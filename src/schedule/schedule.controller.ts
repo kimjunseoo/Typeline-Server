@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { userInfo } from 'os';
-import { getScheduleDTO } from './dto/getSchedule.dto';
+import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
 import { createScheduleDTO } from './dto/createSchedule.dto';
+import { deleteScheduleDTO } from './dto/deleteSchedule.dto';
+import { updateScheduleDTO } from './dto/updateSchedule.dto';
 
 @ApiTags('Schedule API')
 @Controller('schedule')
@@ -13,57 +15,65 @@ export class ScheduleController {
     }
 
     @ApiOperation({ summary: '한 달 일정 불러오기', description: '' })
-    @ApiParam({
-        name: "yyyymm",
+    @ApiQuery({
+        name: "yyyy",
         required: true,
-        description: "연도와 월을 붙인 포맷 / ex: 202306"
+        description: "연도 / YYYY포맷 / ex: 2023"
     })
-    @Get('/month/:yyyymm')
-    getMonthSchedule(@Param('yyyymm', ParseIntPipe) yyyymm: number, @Body() data: getScheduleDTO){
+    @ApiQuery({
+        name: "mm",
+        required: true,
+        description: "월 / MM포맷 / ex: 06"
+    })
+    @Get('/month')
+    getMonthSchedule(
+        @Query("yyyy") yyyy: string,
+        @Query("mm") mm: string,
+        @Body() data: getMonthScheduleDTO){
+
 
     }
 
     @ApiOperation({ summary: '하루 일정 불러오기', description: '' })
-    @ApiParam({
-        name: "yyyymmdd",
+    @ApiQuery({
+        name: "yyyy",
         required: true,
-        description: "연도와 월, 일을 붙인 포맷 / ex: 20230609"
+        description: "연도 / YYYY포맷 / ex: 2023"
     })
-    @Get('/:yyyymmdd')
-    getDaySchedule(@Param('yyyymmdd', ParseIntPipe) yyyymmdd: number, @Body() data: getScheduleDTO){
+    @ApiQuery({
+        name: "mm",
+        required: true,
+        description: "월 / MM포맷 / ex: 06"
+    })
+    @ApiQuery({
+        name: "dd",
+        required: true,
+        description: "일 / DD포맷 / ex: 10"
+    })
+    @Get('/day')
+    getDaySchedule(
+        @Query("yyyy") yyyy: string,
+        @Query("mm") mm: string,
+        @Query("dd") dd: string,
+        @Body() data: getDayScheduleDTO){
 
     }
 
     @ApiOperation({ summary: '일정 추가', description: '' })
-    @ApiParam({
-        name: "yyyymmdd",
-        required: true,
-        description: "연도와 월, 일을 붙인 포맷 / ex: 20230609"
-    })
-    @Post('/:yyyymmdd')
-    createSchedule(@Param('yyyymmdd', ParseIntPipe) yyyymmdd: number, @Body() data: createScheduleDTO){
+    @Post()
+    createSchedule(@Body() data: createScheduleDTO){
 
     }
 
     @ApiOperation({ summary: '일정 삭제', description: '' })
-    @ApiParam({
-        name: "yyyymmdd",
-        required: true,
-        description: "연도와 월, 일을 붙인 포맷 / ex: 20230609"
-    })
-    @Delete('/:yyyymmdd')
-    deleteSchedule(@Param('yyyymmdd', ParseIntPipe) yyyymmdd: number){
+    @Delete()
+    deleteSchedule(@Body() data: deleteScheduleDTO){
 
     }
 
     @ApiOperation({ summary: '일정 변경', description: '' })
-    @ApiParam({
-        name: "yyyymmdd",
-        required: true,
-        description: "연도와 월, 일을 붙인 포맷 / ex: 20230609"
-    })
-    @Patch('/:yyyymmdd')
-    updateSchedule(@Param('yyyymmdd', ParseIntPipe) yyyymmdd: number){
+    @Patch()
+    updateSchedule(@Body() data: updateScheduleDTO){
 
     }
 
