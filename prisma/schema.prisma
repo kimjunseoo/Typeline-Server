@@ -20,7 +20,6 @@ model User {
 model Schedule {
   schedule_id   Int      @default(autoincrement()) @id
   user_id       String
-  user          User @relation(fields: [user_id], references: [user_id])
   yyyy          String
   mm            String
   dd            String
