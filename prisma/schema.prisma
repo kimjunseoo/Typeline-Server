@@ -20,8 +20,10 @@ model User {
 model Schedule {
   schedule_id   Int      @default(autoincrement()) @id
   user_id       String
-  yyyymm        Int?
-  yyyymmdd      Int? 
+  user          User @relation(fields: [user_id], references: [user_id])
+  yyyy          String
+  mm            String
+  dd            String
   memo          String
   status        Boolean  @default(false)
 }
