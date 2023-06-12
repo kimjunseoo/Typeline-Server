@@ -4,6 +4,7 @@ import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { ApiBody, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { createUserInfoDTO } from './dto/createUserInfo.dto';
+import { deleteUserInfoDTO } from './dto/deleteUserInfo.dto';
 
 @ApiTags('User API')
 @Controller('user')
@@ -25,7 +26,7 @@ export class UserController {
 
     @ApiOperation({ summary: '회원 탈퇴', description: '가입한 유저 정보를 삭제 / 탈퇴' })
     @Delete()
-    async deleteUserInfo(){
+    async deleteUserInfo(@Body() userInfo: deleteUserInfoDTO): Promise<void>{
 
     } 
 }
