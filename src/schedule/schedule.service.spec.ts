@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ScheduleService } from './schedule.service';
-import { PrismaService } from '../../src/prisma.service';
+import { PrismaService } from '../prisma.service';
 
 describe('ScheduleService', () => {
   let service: ScheduleService;
@@ -27,7 +27,7 @@ describe('ScheduleService', () => {
     });
     it('주어진 날짜로 일정이 조회되지 않는다면, 주어진 달에 정보가 없다는 예외를 반환한다.', () => {
 
-    });
+    }); 
   });
 
   describe('getDaySchedule', () => {
