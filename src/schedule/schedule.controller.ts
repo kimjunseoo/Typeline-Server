@@ -54,8 +54,8 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 추가', description: '' })
     @Post()
-    createSchedule(@Body() data: createScheduleDTO){
-
+    createSchedule(@Body() data: createScheduleDTO): Promise<object>{
+        return this.scheduleService.createSchedule(data);
     }
 
     @ApiOperation({ summary: '일정 삭제', description: '' })

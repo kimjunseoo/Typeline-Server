@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
+import { createScheduleDTO } from './dto/createSchedule.dto';
 
 
 @Injectable()
@@ -55,8 +56,26 @@ export class ScheduleService {
         
     }
 
-    createSchedule(){
+    async createSchedule(data: createScheduleDTO): Promise<object>{
 
+        const userId = data.user_id;
+
+        const user = await this.prismaservice.user.findUnique({
+            where: {
+                user_id: userId
+            }
+        })
+
+        if(!user){
+            throw new NotFoundException(`Unable to register schedule because ID ${userId} is not registered.`)
+        } else {
+            const schedule = await this.prismaservice.schedule.create({
+                data: data
+            })
+
+            return schedule;
+        }
+        
     }
 
     deleteSchedule(){
