@@ -5,12 +5,12 @@ export class getMonthScheduleDTO {
     
     @ApiProperty()
     @IsNotEmpty()
-    userId : string
+    user_id : string
 }
 
 export class getDayScheduleDTO {
 
     @ApiProperty()
     @IsNotEmpty()
-    userId : string
+    user_id : string
 }
