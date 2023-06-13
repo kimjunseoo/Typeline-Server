@@ -26,12 +26,9 @@ export class ScheduleController {
         description: "월 / MM포맷 / ex: 06"
     })
     @Get('/month')
-    getMonthSchedule(
-        @Query("yyyy") yyyy: string,
-        @Query("mm") mm: string,
-        @Body() data: getMonthScheduleDTO){
+    getMonthSchedule( @Query("yyyy") yyyy: string, @Query("mm") mm: string, @Body() data: getMonthScheduleDTO): Promise<Array<object>>{
 
-
+        return this.scheduleService.getMonthSchedule(yyyy, mm, data);
     }
 
     @ApiOperation({ summary: '하루 일정 불러오기', description: '' })
@@ -51,12 +48,8 @@ export class ScheduleController {
         description: "일 / DD포맷 / ex: 10"
     })
     @Get('/day')
-    getDaySchedule(
-        @Query("yyyy") yyyy: string,
-        @Query("mm") mm: string,
-        @Query("dd") dd: string,
-        @Body() data: getDayScheduleDTO){
-
+    getDaySchedule( @Query("yyyy") yyyy: string, @Query("mm") mm: string, @Query("dd") dd: string, @Body() data: getDayScheduleDTO): Promise<Array<object>>{
+        return this.scheduleService.getDaySchedule(yyyy, mm, dd, data);
     }
 
     @ApiOperation({ summary: '일정 추가', description: '' })
