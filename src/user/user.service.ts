@@ -10,7 +10,7 @@ export class UserService {
 
     }
 
-    async registerUserInfo(userInfo : createUserInfoDTO){
+    async registerUserInfo(userInfo : createUserInfoDTO): Promise<object>{
 
         //주어진 정보가 유효하다면, user 를 생성하고 해당 user 정보를 반환함.
         //주어진 user id가 이미 존재한다면, 해당 user id가 이미 존재한다는 예외를 반환함.
@@ -32,7 +32,7 @@ export class UserService {
         
     }
     
-    async deleteUserInfo(userInfo: deleteUserInfoDTO){
+    async deleteUserInfo(userInfo: deleteUserInfoDTO): Promise<object>{
         const userId = userInfo.user_id;
 
         const user = await this.prismaservice.user.findUnique({
