@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
 import { createScheduleDTO } from './dto/createSchedule.dto';
+import { deleteScheduleDTO } from './dto/deleteSchedule.dto';
 
 
 @Injectable()
@@ -78,8 +79,35 @@ export class ScheduleService {
         
     }
 
-    deleteSchedule(){
+    async deleteSchedule(data: deleteScheduleDTO): Promise<object> {
+        
+        const userId = data.user_id;
+        const scheduleId = data.schedule_id;
 
+        const schedule = await this.prismaservice.schedule.findUnique({
+            where: {
+                schedule_id: scheduleId
+            }
+        });
+
+        if(!schedule){
+
+            throw new NotFoundException(`There is no schedule with that Schedule ID ${scheduleId}.`)
+
+        } else if(schedule.user_id != userId){
+
+            throw new UnauthorizedException(`User ${userId} does not have permission to delete the schedule.`)
+
+        } else if(schedule){
+
+            await this.prismaservice.schedule.delete({
+                where: {
+                    schedule_id: scheduleId
+                }
+            })
+
+            return schedule;
+        };
     }
 
     updateSchedule(){

@@ -60,8 +60,8 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 삭제', description: '' })
     @Delete()
-    deleteSchedule(@Body() data: deleteScheduleDTO){
-
+    deleteSchedule(@Body() data: deleteScheduleDTO): Promise<object>{
+        return this.scheduleService.deleteSchedule(data);
     }
 
     @ApiOperation({ summary: '일정 변경', description: '' })
