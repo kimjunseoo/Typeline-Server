@@ -20,12 +20,13 @@ export class UserService {
             }
         });
 
-        if(!user){
+        if(user){
+            throw new BadRequestException(`User ID ${userId} already exists. User IDs cannot be duplicated.`)
+            
+        } else {
             const genUser = await this.prismaservice.user.create({ data: userInfo });
 
             return genUser;
-        } else {
-            throw new BadRequestException(`User ID ${userId} already exists. User IDs cannot be duplicated.`)
         }
         
     }
