@@ -27,7 +27,7 @@ export class ScheduleService {
             } 
         })
 
-        if(!schedule){
+        if(schedule.length == 0){
             throw new NotFoundException(`No schedule registered with ID ${userId} in this month ${yyyy + mm}.`)
         } else {
             return schedule;
