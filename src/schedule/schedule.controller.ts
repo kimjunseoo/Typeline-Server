@@ -6,6 +6,7 @@ import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
 import { createScheduleDTO } from './dto/createSchedule.dto';
 import { deleteScheduleDTO } from './dto/deleteSchedule.dto';
 import { updateScheduleDTO } from './dto/updateSchedule.dto';
+import { updateScheduleStatusDTO } from './dto/updateScheduleStatus.dto';
 
 @ApiTags('Schedule API')
 @Controller('schedule')
@@ -70,4 +71,9 @@ export class ScheduleController {
         return this.scheduleService.updateSchedule(data);
     }
 
+    @ApiOperation({ summary: '일정 상태 변경', description: '일정 완료 여부' })
+    @Patch('/status')
+    updateScheduleStatus(@Body() data: updateScheduleStatusDTO): Promise<object>{
+        return this.scheduleService.updateScheduleStatus(data);
+    }
 }

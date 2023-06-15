@@ -1,9 +1,10 @@
 import { updateScheduleDTO } from './dto/updateSchedule.dto';
-import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
 import { createScheduleDTO } from './dto/createSchedule.dto';
 import { deleteScheduleDTO } from './dto/deleteSchedule.dto';
+import { updateScheduleStatusDTO } from './dto/updateScheduleStatus.dto';
 
 
 @Injectable()
@@ -139,6 +140,39 @@ export class ScheduleService {
 
             return updatedSchedule;
         }
+
+    }
+
+    async updateScheduleStatus(data: updateScheduleStatusDTO): Promise<object>{
+
+        const scheduleId = data.schedule_id;
+        const userId = data.user_id;
+        const status = data.status;
+
+        const schedule = await this.prismaservice.schedule.findUnique({
+            where: {
+                schedule_id: scheduleId
+            }
+        });
+
+        if(!schedule){
+            throw new NotFoundException(`There is no schedule with Schedule ID ${scheduleId}.`)
+        } else if(schedule.user_id != userId) {
+            throw new UnauthorizedException(`User ${userId} does not have permission to update the schedule status.`)
+        } else if(schedule.status == status) {
+            throw new BadRequestException(`There is no difference between the requested state and the status of the current schedule.`)
+        } else {
+            const updateSchedule = await this.prismaservice.schedule.update({
+                where: {
+                    schedule_id: scheduleId
+                },
+                data: {
+                    status: status
+                }
+            })
+
+            return updateSchedule;
+        };
 
     }
 }
