@@ -113,6 +113,9 @@ export class ScheduleController {
         status: 200, type: scheduleDTO, description: '일정 변경하기 성공'
     })
     @ApiResponse({
+        status: 400, description: '요청한 상태가 현재 상태와 동일하여 변경할 수 없습니다.'
+    })
+    @ApiResponse({
         status: 401, description: '요청 정보의 User ID에게는 상태 변경 요청 권한이 없습니다.'
     })
     @ApiResponse({
