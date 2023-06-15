@@ -42,8 +42,7 @@ export class UserService {
         if(!user){
             throw new NotFoundException(`ID ${userId} requested for deletion was not found.`);
             
-        } else{
-
+        } else {
             await this.prismaservice.user.delete({
                 where: {
                     user_id: userId
