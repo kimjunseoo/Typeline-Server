@@ -7,6 +7,7 @@ import { createScheduleDTO } from './dto/createSchedule.dto';
 import { deleteScheduleDTO } from './dto/deleteSchedule.dto';
 import { updateScheduleDTO } from './dto/updateSchedule.dto';
 import { updateScheduleStatusDTO } from './dto/updateScheduleStatus.dto';
+import { scheduleDTO } from './dto/schedule.dto';
 
 @ApiTags('Schedule API')
 @Controller('schedule')
@@ -67,7 +68,7 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 추가', description: '' })
     @ApiResponse({
-        status: 201, description: '일정 생성하기 성공'
+        status: 201, type: scheduleDTO, description: '일정 생성하기 성공'
     })
     @ApiResponse({
         status: 404, description: '요청 정보 중 User ID가 등록되지않은 ID입니다. '
@@ -79,7 +80,7 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 삭제', description: '' })
     @ApiResponse({
-        status: 200, description: '일정 삭제하기 성공'
+        status: 200, type: scheduleDTO, description: '일정 삭제하기 성공'
     })
     @ApiResponse({
         status: 401, description: '요청 정보의 User ID에게는 삭제 요청 권한이 없습니다.'
@@ -94,7 +95,7 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 변경', description: '' })
     @ApiResponse({
-        status: 200, description: '일정 변경하기 성공'
+        status: 200, type: scheduleDTO, description: '일정 변경하기 성공'
     })
     @ApiResponse({
         status: 401, description: '요청 정보의 User ID에게는 변경 요청 권한이 없습니다.'
@@ -109,7 +110,7 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 상태 변경', description: '일정 완료 여부' })
     @ApiResponse({
-        status: 200, description: '일정 변경하기 성공'
+        status: 200, type: scheduleDTO, description: '일정 변경하기 성공'
     })
     @ApiResponse({
         status: 401, description: '요청 정보의 User ID에게는 상태 변경 요청 권한이 없습니다.'
