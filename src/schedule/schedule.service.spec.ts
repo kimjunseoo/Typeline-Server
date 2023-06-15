@@ -23,7 +23,7 @@ describe('ScheduleService', () => {
       //expect(service.getMonthSchedule).toBeInstanceOf(Array);
     });
     it('주어진 날짜와 id로 일정이 조회되지 않는다면, 해당 월에 id로 저장된 정보가 없다는 예외를 반환한다.', () => {
-
+      
     });
   });
 

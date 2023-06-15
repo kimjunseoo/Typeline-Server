@@ -1,3 +1,4 @@
+import { updateScheduleDTO } from './dto/updateSchedule.dto';
 import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { getDayScheduleDTO, getMonthScheduleDTO } from './dto/getSchedule.dto';
@@ -110,8 +111,35 @@ export class ScheduleService {
         };
     }
 
-    updateSchedule(){
+    async updateSchedule(data: updateScheduleDTO): Promise<object>{
+
+        const scheduleId = data.schedule_id;
+        const userId = data.user_id;
+        const memo = data.memo;
         
+        const schedule = await this.prismaservice.schedule.findUnique({
+            where: {
+                schedule_id: scheduleId,
+            }
+        });
+
+        if(!schedule){
+            throw new NotFoundException(`There is no schedule with Schedule ID ${scheduleId}.`)
+        } else if(schedule.user_id != userId) {
+            throw new UnauthorizedException(`User ${userId} does not have permission to update the schedule.`)
+        } else {
+            const updatedSchedule = await this.prismaservice.schedule.update({
+                where: {
+                    schedule_id:scheduleId,
+                },
+                data: {
+                    memo: memo
+                }
+            });
+
+            return updatedSchedule;
+        }
+
     }
 }
 

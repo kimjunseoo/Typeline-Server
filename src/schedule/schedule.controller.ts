@@ -66,8 +66,8 @@ export class ScheduleController {
 
     @ApiOperation({ summary: '일정 변경', description: '' })
     @Patch()
-    updateSchedule(@Body() data: updateScheduleDTO){
-
+    updateSchedule(@Body() data: updateScheduleDTO): Promise<object>{
+        return this.scheduleService.updateSchedule(data);
     }
 
 }
